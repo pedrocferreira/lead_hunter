@@ -1,0 +1,28 @@
+{
+  "id": "real-vitta-cl-nica-integrada-nova-ponte-1787607733950",
+  "lead": {
+    "id": "real-vitta-cl-nica-integrada-nova-ponte-1787607733950",
+    "title": "Vitta Clínica Integrada",
+    "phone": "",
+    "address": "Av. Gov. Valadares, 992 - Centro, Nova Ponte - MG, 38160-000, Brasil",
+    "neighborhood": "992 - Centro",
+    "city": "Nova Ponte",
+    "rating": 0,
+    "reviewsCount": 0,
+    "category": "Médico",
+    "googleCategory": "Médico",
+    "searchedNiche": "Clínicas",
+    "normalizedCategory": "medico",
+    "analyzedStatus": "NO_SITE",
+    "analyzedAt": "2026-08-24T21:42:13.951Z",
+    "photos": [
+      "https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=9WgfVfkFc7CkNm7OCOt_eQ&cb_client=search.gws-prod.gps&w=86&h=86&yaw=232.3039&pitch=0&thumbfov=100",
+      "https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=9WgfVfkFc7CkNm7OCOt_eQ&cb_client=search.gws-prod.gps&w=408&h=240&yaw=232.3039&pitch=0&thumbfov=100",
+      "https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=9WgfVfkFc7CkNm7OCOt_eQ&cb_client=search.gws-prod.gps&w=360&h=120&yaw=232.3039&pitch=0&thumbfov=100"
+    ],
+    "isOpenNow": false
+  },
+  "type": "preview",
+  "createdAt": 1787607800207,
+  "expiresAt": 1787629400207
+}

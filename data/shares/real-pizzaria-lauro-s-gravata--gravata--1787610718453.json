@@ -1,0 +1,36 @@
+{
+  "id": "real-pizzaria-lauro-s-gravata--gravata--1787610718453",
+  "lead": {
+    "id": "real-pizzaria-lauro-s-gravata--gravata--1787610718453",
+    "title": "Pizzaria Lauro's Gravataí",
+    "phone": "(51) 99522-4201",
+    "phoneE164": "+5551995224201",
+    "whatsappNumber": "(51) 99522-4201",
+    "whatsappE164": "+5551995224201",
+    "whatsappSource": "maps_phone",
+    "address": "R. Dr. Luiz Bastos do Prado, 1471 - A - Centro, Gravataí - RS, 94010-180, Brasil",
+    "neighborhood": "1471 - A - Centro",
+    "city": "Gravataí",
+    "rating": 4.9,
+    "reviewsCount": 7406,
+    "category": "Restaurante",
+    "googleCategory": "Restaurante",
+    "searchedNiche": "Restaurantes",
+    "normalizedCategory": "restaurante",
+    "originalWebsite": "https://lauros.com.br/lauros-gravatai/",
+    "analyzedStatus": "SITE_OFFLINE",
+    "analyzedAt": "2026-08-24T22:31:58.453Z",
+    "photos": [
+      "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWm2VC2oJ91_RD9W2xXyyvjDJhVeSbMM3LtaKNSRkxpPhp61OCaBy96XUreTidCdq2IPW5A8rn9jmCehc5mAjK9_gsKfqzSvAPJpw1YnF3-4cA8FGdBpK38rI_8Iqcv9ykgb30Yw=w800-h600-k-no",
+      "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkTE4Ufpa5tK4UYaLdF6woJiZAzA7Voxf_XEY5G-ibW26_7zRiSXsNBlnQdjl6VRQK7H_qLdfUjql0x92OcZhwuWyJlxZQqaDShj9yKiWrtrZEFixBDK7-lvin9GOyMkXkTkIPyy9-XmorE=w800-h600-k-no",
+      "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmq5ihpy6sljUuXIanDO49C2k2W8zWY6AEvog8NtPOucSOvl6WTmdxTEwxXHgPMVqqzgfwQiL1_2vYq9kM9x_trJBWEtkZiYNyCbgbwg8ug4Fpw2VLeyDKxXyADTylnw6z-UPpq=w800-h600-k-no",
+      "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkV-zQ58QmQRwpgkHuUT7h-tBRtlcKhh9B80WKHiDVyiQ4iCiSJdM05TtfijW_MRAcHplPno_p0nvr3BfsTdGnWZEm-nNScgO5o_wK4R4bRjS1MGvxi3jrEO3mHldsD_Cb49iA=w800-h600-k-no",
+      "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWm2VC2oJ91_RD9W2xXyyvjDJhVeSbMM3LtaKNSRkxpPhp61OCaBy96XUreTidCdq2IPW5A8rn9jmCehc5mAjK9_gsKfqzSvAPJpw1YnF3-4cA8FGdBpK38rI_8Iqcv9ykgb30Yw=w800-h600-k-no",
+      "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkovXXdkVTUOY-s97_GLEqIAfrEmp9pFCl10Py0iJCNrs3OV5_wzXncxjT-e6-welTsxJhIonqpzk45OM5tt8wHQeneEISqRWaXvZfD966apcChfCsE9NHKSUKdQQrYNYitiPGhggyK1ueF=w800-h600-k-no"
+    ],
+    "isOpenNow": true
+  },
+  "type": "preview",
+  "createdAt": 1787610811493,
+  "expiresAt": 1787632411493
+}

@@ -13,6 +13,7 @@ interface LeadsTableProps {
   onMessage: (lead: Lead) => void;
   onPreview: (lead: Lead) => void;
   onDeepCrawl: (lead: Lead) => void;
+  onConvertClient?: (lead: Lead) => void;
 }
 
 function StarRating({ rating }: { rating: number }) {
@@ -26,7 +27,7 @@ function StarRating({ rating }: { rating: number }) {
   );
 }
 
-export function LeadsTable({ leads, onMessage, onPreview, onDeepCrawl }: LeadsTableProps) {
+export function LeadsTable({ leads, onMessage, onPreview, onDeepCrawl, onConvertClient }: LeadsTableProps) {
   if (leads.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-24 text-slate-500">
@@ -129,12 +130,22 @@ export function LeadsTable({ leads, onMessage, onPreview, onDeepCrawl }: LeadsTa
 
               {/* Ações */}
               <td className="py-3.5 text-right">
-                <div className="flex items-center justify-end gap-2">
+                <div className="flex items-center justify-end gap-1.5 flex-wrap">
+                  {onConvertClient && (
+                    <button
+                      id={`btn-convert-${lead.id}`}
+                      onClick={() => onConvertClient(lead)}
+                      title="Transformar em Cliente e Hospedar Site"
+                      className="flex items-center gap-1 px-2.5 py-1.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white rounded-lg text-xs font-semibold transition-all shadow-sm cursor-pointer"
+                    >
+                      <span>🎯 Virar Cliente</span>
+                    </button>
+                  )}
                   <button
                     id={`btn-message-${lead.id}`}
                     onClick={() => onMessage(lead)}
                     title="Iniciar Abordagem"
-                    className="flex items-center gap-1.5 px-3 py-1.5 bg-green-500/10 hover:bg-green-500/20 border border-green-500/20 hover:border-green-500/40 text-green-400 hover:text-green-300 rounded-lg text-xs font-medium transition-all"
+                    className="flex items-center gap-1 px-2.5 py-1.5 bg-green-500/10 hover:bg-green-500/20 border border-green-500/20 hover:border-green-500/40 text-green-400 hover:text-green-300 rounded-lg text-xs font-medium transition-all"
                   >
                     <MessageCircle className="w-3.5 h-3.5" />
                     Abordar
@@ -143,7 +154,7 @@ export function LeadsTable({ leads, onMessage, onPreview, onDeepCrawl }: LeadsTa
                     id={`btn-preview-${lead.id}`}
                     onClick={() => onPreview(lead)}
                     title="Preview da Landing Page"
-                    className="flex items-center gap-1.5 px-3 py-1.5 bg-violet-500/10 hover:bg-violet-500/20 border border-violet-500/20 hover:border-violet-500/40 text-violet-400 hover:text-violet-300 rounded-lg text-xs font-medium transition-all"
+                    className="flex items-center gap-1 px-2.5 py-1.5 bg-violet-500/10 hover:bg-violet-500/20 border border-violet-500/20 hover:border-violet-500/40 text-violet-400 hover:text-violet-300 rounded-lg text-xs font-medium transition-all"
                   >
                     <Eye className="w-3.5 h-3.5" />
                     Preview
@@ -152,7 +163,7 @@ export function LeadsTable({ leads, onMessage, onPreview, onDeepCrawl }: LeadsTa
                     id={`btn-deep-crawl-${lead.id}`}
                     onClick={() => onDeepCrawl(lead)}
                     title="Análise Profunda & Extrair Prompt"
-                    className="flex items-center gap-1.5 px-3 py-1.5 bg-indigo-500/10 hover:bg-indigo-500/20 border border-indigo-500/20 hover:border-indigo-500/40 text-indigo-400 hover:text-indigo-300 rounded-lg text-xs font-medium transition-all"
+                    className="flex items-center gap-1 px-2.5 py-1.5 bg-indigo-500/10 hover:bg-indigo-500/20 border border-indigo-500/20 hover:border-indigo-500/40 text-indigo-400 hover:text-indigo-300 rounded-lg text-xs font-medium transition-all"
                   >
                     <BrainCircuit className="w-3.5 h-3.5" />
                     IA

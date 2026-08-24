@@ -1,0 +1,35 @@
+{
+  "id": "real-toscana-restaurante-gravata--1787609712963",
+  "lead": {
+    "id": "real-toscana-restaurante-gravata--1787609712963",
+    "title": "Toscana Restaurante",
+    "phone": "(51) 3484-5593",
+    "phoneE164": "+555134845593",
+    "whatsappNumber": "(51) 3484-5593",
+    "whatsappE164": "+555134845593",
+    "whatsappSource": "maps_phone",
+    "address": "Rua Anápio Gomes, 1497 - Centro, Gravataí - RS, 94010-011, Brasil",
+    "neighborhood": "1497 - Centro",
+    "city": "Gravataí",
+    "rating": 4.7,
+    "reviewsCount": 1183,
+    "category": "Restaurante",
+    "googleCategory": "Restaurante",
+    "searchedNiche": "Restaurantes",
+    "normalizedCategory": "restaurante",
+    "analyzedStatus": "NO_SITE",
+    "analyzedAt": "2026-08-24T22:15:12.963Z",
+    "photos": [
+      "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWlvKht1I9qvWBi1NuYQiAZ0mV-GxvYN_9K01R2zX7IfpkZoDe1EIDmQDw0Wiqsc-oGkXDFYuJrsFVzyadhHd-1-_ojiDv4uhuQPzerpULspg59qDKEvm__cPsvzM4RDapg2cWqg0Lzkiucz=w800-h600-k-no",
+      "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWnu3VxFwitoQbIQ5C4xxiGaJDkQnz28VeavLPh6CgS9syclwviMvNZ4jFEHzqwsAjW7eSK7BGAVCkZuoG8Fgzee3HWjJuqg51GybTHrw3IzYc9YM9QwUR5HLjweTEmDrQzIhYwypg=w800-h600-k-no",
+      "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmi_FrciKIJg-zsC44xRDfQEEMu4FXWiSzzHKH7Ic_D20tr4BP0wlle12_j02BiGb5BRQPZECjaMvdCpPiNBFXrUjArzZwm_3piKqo73gnjcScCI3yiYH_88WZoI3J3Tz41xKdK=w800-h600-k-no",
+      "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWnRlXfFPBFWkc2ACeVZ_vOPpGLGxTQ_7G7tHlu5K9X_TJ607v21ubxpF0YEScHAHbTI2A9a7Qo3fezM6KxG3EwaooY4OpIJzo-tKVDYB7PqwpI087CCHLlzQ3NDzbY_Xzkccpbo=w800-h600-k-no",
+      "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWlvKht1I9qvWBi1NuYQiAZ0mV-GxvYN_9K01R2zX7IfpkZoDe1EIDmQDw0Wiqsc-oGkXDFYuJrsFVzyadhHd-1-_ojiDv4uhuQPzerpULspg59qDKEvm__cPsvzM4RDapg2cWqg0Lzkiucz=w800-h600-k-no",
+      "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWnu3VxFwitoQbIQ5C4xxiGaJDkQnz28VeavLPh6CgS9syclwviMvNZ4jFEHzqwsAjW7eSK7BGAVCkZuoG8Fgzee3HWjJuqg51GybTHrw3IzYc9YM9QwUR5HLjweTEmDrQzIhYwypg=w800-h600-k-no"
+    ],
+    "isOpenNow": false
+  },
+  "type": "preview",
+  "createdAt": 1787609834006,
+  "expiresAt": 1787631434006
+}

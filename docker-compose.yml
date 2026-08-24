@@ -3,15 +3,16 @@ services:
     build: .
     container_name: leadsapp_container
     ports:
-      - "3000:3000"
+      - "127.0.0.1:3000:3000"
     restart: unless-stopped
-    # As chaves vêm do .env local (que não vai para o repositório).
-    # Copie .env.example para .env e preencha antes de subir.
+    shm_size: "1gb"
+    volumes:
+      - ./data:/app/data
     env_file:
       - .env
     environment:
-      # Modos do App — valores sem segredo podem ficar aqui
       - USE_REAL_CRAWLER=${USE_REAL_CRAWLER:-true}
       - CRAWLER_TIMEOUT=${CRAWLER_TIMEOUT:-30000}
-      - CRAWLER_MAX_RESULTS=${CRAWLER_MAX_RESULTS:-20}
+      - CRAWLER_MAX_RESULTS=${CRAWLER_MAX_RESULTS:-15}
       - GROQ_API_KEY=${GROQ_API_KEY:-}
+

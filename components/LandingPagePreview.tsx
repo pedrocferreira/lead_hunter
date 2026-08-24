@@ -36,9 +36,17 @@ const COLOR_SOURCE_LABEL: Record<string, string> = {
 
 export function LandingPagePreview({ lead, onClose }: LandingPagePreviewProps) {
   const handleClose = useCallback(() => onClose(), [onClose]);
-  const [copied, setCopied] = useState(false);
+  const [copiedType, setCopiedType] = useState<"card" | "preview" | null>(null);
   const [downloaded, setDownloaded] = useState(false);
   const [showCard, setShowCard] = useState(false);
+
+  // Sincroniza automaticamente com o servidor ao abrir o preview
+  useEffect(() => {
+    if (lead) {
+      saveLeadForPreview(lead, "cartao");
+      saveLeadForPreview(lead, "preview");
+    }
+  }, [lead]);
 
   useEffect(() => {
     if (!lead) return;
@@ -88,20 +96,27 @@ export function LandingPagePreview({ lead, onClose }: LandingPagePreviewProps) {
   const fakeUrl = `www.${slug}.com.br`;
 
   function openFullPreview() {
-    saveLeadForPreview(lead!);
+    saveLeadForPreview(lead!, "preview");
     window.open(`/preview/${lead!.id}`, "_blank");
   }
 
   function openCard() {
-    saveLeadForPreview(lead!);
+    saveLeadForPreview(lead!, "cartao");
     window.open(`/cartao/${lead!.id}`, "_blank");
   }
 
-  function copyLink() {
-    saveLeadForPreview(lead!);
+  function copyCardLink() {
+    saveLeadForPreview(lead!, "cartao");
+    navigator.clipboard.writeText(`${window.location.origin}/cartao/${lead!.id}`);
+    setCopiedType("card");
+    setTimeout(() => setCopiedType(null), 3000);
+  }
+
+  function copyPreviewLink() {
+    saveLeadForPreview(lead!, "preview");
     navigator.clipboard.writeText(`${window.location.origin}/preview/${lead!.id}`);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2500);
+    setCopiedType("preview");
+    setTimeout(() => setCopiedType(null), 3000);
   }
 
   /** Empacota index.html + styles.css + script.js e baixa como .zip */
@@ -141,16 +156,8 @@ export function LandingPagePreview({ lead, onClose }: LandingPagePreviewProps) {
 
         <div className="flex items-center gap-2 flex-wrap">
           <button
-            id="btn-open-full-preview"
-            onClick={openFullPreview}
-            className="flex items-center gap-1.5 px-3 py-1.5 bg-violet-600 hover:bg-violet-500 border border-violet-500 text-white rounded-lg text-xs font-semibold transition-all cursor-pointer"
-          >
-            <Rocket className="w-3.5 h-3.5" />
-            Abrir site animado
-          </button>
-          <button
             id="btn-toggle-card"
-            onClick={() => setShowCard((v) => !v)}
+            onClick={() => setShowCard((v: boolean) => !v)}
             className={`flex items-center gap-1.5 px-3 py-1.5 border rounded-lg text-xs font-semibold transition-all cursor-pointer ${
               showCard
                 ? "bg-violet-500/20 border-violet-500/40 text-violet-200"
@@ -160,16 +167,71 @@ export function LandingPagePreview({ lead, onClose }: LandingPagePreviewProps) {
             <CreditCard className="w-3.5 h-3.5" />
             {showCard ? "Ver site" : "Cartão de visita"}
           </button>
-          {showCard && (
-            <button
-              id="btn-open-card"
-              onClick={openCard}
-              className="flex items-center gap-1.5 px-3 py-1.5 bg-violet-600 hover:bg-violet-500 border border-violet-500 text-white rounded-lg text-xs font-semibold transition-all cursor-pointer"
-            >
-              <Rocket className="w-3.5 h-3.5" />
-              Abrir cartão
-            </button>
+
+          {showCard ? (
+            <>
+              <button
+                id="btn-open-card"
+                onClick={openCard}
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-violet-600 hover:bg-violet-500 border border-violet-500 text-white rounded-lg text-xs font-semibold transition-all cursor-pointer shadow-sm"
+              >
+                <Rocket className="w-3.5 h-3.5" />
+                Abrir cartão
+              </button>
+              <button
+                id="btn-copy-card-link"
+                onClick={copyCardLink}
+                title="Gera link público para enviar no WhatsApp (válido por 6 horas)"
+                className={`flex items-center gap-1.5 px-3 py-1.5 border rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                  copiedType === "card"
+                    ? "bg-emerald-500/20 border-emerald-500/40 text-emerald-300"
+                    : "bg-emerald-600 hover:bg-emerald-500 border-emerald-500 text-white"
+                }`}
+              >
+                {copiedType === "card" ? (
+                  <>
+                    <Check className="w-3.5 h-3.5" /> Link do cartão copiado (6h)!
+                  </>
+                ) : (
+                  <>
+                    <Copy className="w-3.5 h-3.5" /> Copiar link do cartão (6h)
+                  </>
+                )}
+              </button>
+            </>
+          ) : (
+            <>
+              <button
+                id="btn-open-full-preview"
+                onClick={openFullPreview}
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-violet-600 hover:bg-violet-500 border border-violet-500 text-white rounded-lg text-xs font-semibold transition-all cursor-pointer shadow-sm"
+              >
+                <Rocket className="w-3.5 h-3.5" />
+                Abrir site animado
+              </button>
+              <button
+                id="btn-copy-preview-link"
+                onClick={copyPreviewLink}
+                title="Gera link público da landing page (válido por 6 horas)"
+                className={`flex items-center gap-1.5 px-3 py-1.5 border rounded-lg text-xs font-medium transition-all cursor-pointer ${
+                  copiedType === "preview"
+                    ? "bg-emerald-500/20 border-emerald-500/40 text-emerald-300"
+                    : "bg-slate-700 border-slate-600 text-slate-300 hover:bg-slate-600"
+                }`}
+              >
+                {copiedType === "preview" ? (
+                  <>
+                    <Check className="w-3.5 h-3.5" /> Link copiado (6h)!
+                  </>
+                ) : (
+                  <>
+                    <Copy className="w-3.5 h-3.5" /> Copiar link do site (6h)
+                  </>
+                )}
+              </button>
+            </>
           )}
+
           <button
             id="btn-download-site"
             onClick={downloadSite}
@@ -177,7 +239,7 @@ export function LandingPagePreview({ lead, onClose }: LandingPagePreviewProps) {
             className={`flex items-center gap-1.5 px-3 py-1.5 border rounded-lg text-xs font-semibold transition-all cursor-pointer ${
               downloaded
                 ? "bg-emerald-500/20 border-emerald-500/40 text-emerald-300"
-                : "bg-emerald-600 hover:bg-emerald-500 border-emerald-500 text-white"
+                : "bg-slate-700 hover:bg-slate-600 border-slate-600 text-slate-200"
             }`}
           >
             {downloaded ? (
@@ -186,29 +248,11 @@ export function LandingPagePreview({ lead, onClose }: LandingPagePreviewProps) {
               </>
             ) : (
               <>
-                <Download className="w-3.5 h-3.5" /> Baixar HTML/CSS/JS
+                <Download className="w-3.5 h-3.5" /> Baixar ZIP
               </>
             )}
           </button>
-          <button
-            id="btn-copy-preview-link"
-            onClick={copyLink}
-            className={`flex items-center gap-1.5 px-3 py-1.5 border rounded-lg text-xs font-medium transition-all cursor-pointer ${
-              copied
-                ? "bg-emerald-500/20 border-emerald-500/40 text-emerald-300"
-                : "bg-slate-700 border-slate-600 text-slate-300 hover:bg-slate-600"
-            }`}
-          >
-            {copied ? (
-              <>
-                <Check className="w-3.5 h-3.5" /> Link copiado!
-              </>
-            ) : (
-              <>
-                <Copy className="w-3.5 h-3.5" /> Copiar link
-              </>
-            )}
-          </button>
+
           <button
             id="btn-close-preview"
             onClick={handleClose}
