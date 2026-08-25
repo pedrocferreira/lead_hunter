@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -14,6 +14,9 @@ import {
   PlusCircle,
   X,
   CreditCard,
+  CheckCheck,
+  Eye,
+  Filter,
 } from "lucide-react";
 
 import { Lead, FilterType } from "@/lib/types";
@@ -23,11 +26,15 @@ import { LeadsTable } from "@/components/LeadsTable";
 import { LandingPagePreview } from "@/components/LandingPagePreview";
 import { ColdMessageModal } from "@/components/ColdMessageModal";
 import { DeepCrawlModal } from "@/components/DeepCrawlModal";
+import { getContactedMap, isLeadContacted, ContactedLeadInfo } from "@/lib/contactedLeads";
 
 export default function DashboardProspectingPage() {
   const [leads, setLeads] = useState<Lead[]>([]);
   const [loading, setLoading] = useState(false);
   const [activeFilter, setActiveFilter] = useState<FilterType>("ALL");
+  const [contactedStatusFilter, setContactedStatusFilter] = useState<"ALL" | "UNCONTACTED" | "CONTACTED">("ALL");
+  const [contactedMap, setContactedMap] = useState<Record<string, ContactedLeadInfo>>({});
+
   const [selectedLeadForPreview, setSelectedLeadForPreview] = useState<Lead | null>(null);
   const [selectedLeadForMessage, setSelectedLeadForMessage] = useState<Lead | null>(null);
   const [selectedLeadForDeepCrawl, setSelectedLeadForDeepCrawl] = useState<Lead | null>(null);
@@ -39,6 +46,13 @@ export default function DashboardProspectingPage() {
     card: any;
   } | null>(null);
   const [converting, setConverting] = useState(false);
+
+  useEffect(() => {
+    setContactedMap(getContactedMap());
+    const onUpdate = () => setContactedMap(getContactedMap());
+    window.addEventListener("lead_hunter_contacted_updated", onUpdate);
+    return () => window.removeEventListener("lead_hunter_contacted_updated", onUpdate);
+  }, []);
 
   async function handleSearch(niche: string, city: string) {
     setLoading(true);
@@ -59,10 +73,21 @@ export default function DashboardProspectingPage() {
     }
   }
 
-  const filteredLeads =
+  // Filter by website/opportunity status
+  const leadsByStatus =
     activeFilter === "ALL"
       ? leads
       : leads.filter((l) => l.analyzedStatus === activeFilter);
+
+  // Filter by contacted status
+  const filteredLeads = leadsByStatus.filter((lead) => {
+    const isContacted = Boolean(isLeadContacted(lead, contactedMap));
+    if (contactedStatusFilter === "UNCONTACTED") return !isContacted;
+    if (contactedStatusFilter === "CONTACTED") return isContacted;
+    return true;
+  });
+
+  const totalContactedInList = leads.filter((l) => Boolean(isLeadContacted(l, contactedMap))).length;
 
   const stats = {
     total: leads.length,
@@ -71,6 +96,7 @@ export default function DashboardProspectingPage() {
     redirectsSocial: leads.filter((l) => l.analyzedStatus === "REDIRECTS_TO_SOCIAL").length,
     siteOffline: leads.filter((l) => l.analyzedStatus === "SITE_OFFLINE").length,
     siteBroken: leads.filter((l) => l.analyzedStatus === "WEBSITE_BROKEN").length,
+    contacted: totalContactedInList,
   };
 
   async function handleConvertClient(lead: Lead) {
@@ -101,22 +127,22 @@ export default function DashboardProspectingPage() {
 
   return (
     <div className="p-6 md:p-8 space-y-8 max-w-7xl mx-auto">
-      {/* ── Header ── */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+      {/* ── Page Header ── */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl md:text-3xl font-extrabold text-white tracking-tight flex items-center gap-2.5">
-            <MapPin className="w-7 h-7 text-violet-500" />
-            Prospecção Google Maps + IA
+          <h1 className="text-2xl md:text-3xl font-extrabold tracking-tight text-white flex items-center gap-2.5">
+            <Sparkles className="w-6 h-6 text-violet-400" />
+            <span>Prospecção no Google Maps</span>
           </h1>
           <p className="text-sm text-slate-400 mt-1">
-            Mapeie empresas, gere landing pages instantâneas e transforme leads em clientes hospedados
+            Encontre negócios locais sem site, analise oportunidades e dispare abordagens comerciais com IA.
           </p>
         </div>
 
         <div className="flex items-center gap-3">
           <Link
             href="/dashboard/clients"
-            className="flex items-center gap-1.5 px-4 py-2 bg-slate-900 hover:bg-slate-800 border border-slate-700/80 text-slate-200 rounded-xl text-xs font-semibold transition-all"
+            className="flex items-center gap-1.5 px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl text-xs font-semibold transition-all border border-slate-700"
           >
             <Users className="w-4 h-4 text-violet-400" />
             <span>Ver Clientes (CRM)</span>
@@ -139,11 +165,17 @@ export default function DashboardProspectingPage() {
       {/* ── Stats & Filters ── */}
       {leads.length > 0 && (
         <div className="space-y-4">
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-3">
             <div className="bg-slate-900/60 border border-slate-800/80 rounded-xl p-3.5 text-center">
               <div className="text-xl font-bold text-white">{stats.total}</div>
               <div className="text-[11px] text-slate-500 uppercase tracking-wider font-semibold mt-0.5">
-                Total Encontrado
+                Total
+              </div>
+            </div>
+            <div className="bg-slate-900/60 border border-emerald-500/30 bg-emerald-950/10 rounded-xl p-3.5 text-center">
+              <div className="text-xl font-bold text-emerald-400">{stats.contacted}</div>
+              <div className="text-[11px] text-emerald-400 uppercase tracking-wider font-semibold mt-0.5">
+                Já Abordados
               </div>
             </div>
             <div className="bg-slate-900/60 border border-red-500/20 rounded-xl p-3.5 text-center">
@@ -178,12 +210,49 @@ export default function DashboardProspectingPage() {
             </div>
           </div>
 
-          <div className="bg-slate-900/60 border border-slate-800 rounded-2xl p-4">
+          <div className="bg-slate-900/60 border border-slate-800 rounded-2xl p-4 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
             <FilterTabs
               active={activeFilter}
               onChange={(f: FilterType) => setActiveFilter(f)}
               leads={leads}
             />
+
+            {/* Toggle de Filtro por Status de Contato */}
+            <div className="flex items-center gap-1 bg-slate-950 p-1 rounded-xl border border-slate-800 shrink-0">
+              <button
+                onClick={() => setContactedStatusFilter("ALL")}
+                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                  contactedStatusFilter === "ALL"
+                    ? "bg-slate-800 text-white shadow-sm"
+                    : "text-slate-400 hover:text-slate-200"
+                }`}
+              >
+                Todos ({leads.length})
+              </button>
+              <button
+                onClick={() => setContactedStatusFilter("UNCONTACTED")}
+                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1 ${
+                  contactedStatusFilter === "UNCONTACTED"
+                    ? "bg-violet-600 text-white shadow-sm"
+                    : "text-slate-400 hover:text-slate-200"
+                }`}
+              >
+                <span>⚡ Novos / Não Abordados</span>
+                <span className="opacity-80">({leads.length - stats.contacted})</span>
+              </button>
+              <button
+                onClick={() => setContactedStatusFilter("CONTACTED")}
+                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1 ${
+                  contactedStatusFilter === "CONTACTED"
+                    ? "bg-emerald-600 text-white shadow-sm"
+                    : "text-slate-400 hover:text-slate-200"
+                }`}
+              >
+                <CheckCheck className="w-3.5 h-3.5" />
+                <span>Já Abordados</span>
+                <span className="opacity-80">({stats.contacted})</span>
+              </button>
+            </div>
           </div>
         </div>
       )}

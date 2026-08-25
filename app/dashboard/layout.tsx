@@ -8,6 +8,7 @@ import {
   MapPin,
   Users,
   Globe,
+  Bot,
   Code2,
   LogOut,
   PlusCircle,
@@ -68,6 +69,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       href: "/dashboard",
       icon: MapPin,
       exact: true,
+    },
+    {
+      label: "Robô Vendedor WhatsApp",
+      href: "/dashboard/bot",
+      icon: Bot,
     },
     {
       label: "Meus Clientes (CRM)",

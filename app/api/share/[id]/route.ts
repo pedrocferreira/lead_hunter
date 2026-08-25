@@ -3,7 +3,7 @@ import { getSharedLead } from "@/lib/serverShareStore";
 
 export async function GET(
   req: NextRequest,
-  context: { params: Promise<{ id: string }> | { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
     const params = await context.params;

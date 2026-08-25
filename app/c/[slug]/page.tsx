@@ -8,7 +8,7 @@ import { Lead } from "@/lib/types";
 export const dynamic = "force-dynamic";
 
 interface PageProps {
-  params: Promise<{ slug: string }> | { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
 export async function generateMetadata(props: PageProps): Promise<Metadata> {

@@ -7,7 +7,7 @@ import { Wrench, ShieldAlert, Phone, MessageCircle, ArrowRight } from "lucide-re
 export const dynamic = "force-dynamic";
 
 interface PageProps {
-  params: Promise<{ slug: string }> | { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
 export async function generateMetadata(props: PageProps): Promise<Metadata> {
